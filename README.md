@@ -76,13 +76,9 @@ python  va-cnn.py --model baseline --aug 1 --train 0
 ## Reference
 If you find the papers and repo useful, you can cite the paper: 
 
+View Adaptive Neural Networks for High Performance Skeleton-based Human Action Recognition. TPAMI, 2019.
+
 ```
-@article{zhang2019view,
-  title={View adaptive neural networks for high performance skeleton-based human action recognition},
-  author={Zhang, Pengfei and Lan, Cuiling and Xing, Junliang and Zeng, Wenjun and Xue, Jianru and Zheng, Nanning},
-  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
-  year={2019},
-}
 
 
 ```
