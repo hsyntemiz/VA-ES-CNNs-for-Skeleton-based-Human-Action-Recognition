@@ -4,11 +4,10 @@
 ## Introduction
 For skeleton-based human action recognition, one of the key challenges is the large view variations when capturing data. In order to alleviate the effects of view variations, we introduce a novel view adaptation scheme, which automatically determines the virtual observation viewpoints in a learning based data driven manner.  
 
-This repository holds the codes and methods for the following papers:
+This repository holds the codes and methods for the following paper:
 
 [**View Adaptive Neural Networks for High Performance Skeleton-based Human Action Recognition**](https://arxiv.org/pdf/1804.07453.pdf). TPAMI, 2019.
 
-[**View Adaptive Recurrent Neural Networks for High Performance Human Action Recognition from Skeleton Data**](http://openaccess.thecvf.com/content_ICCV_2017/papers/Zhang_View_Adaptive_Recurrent_ICCV_2017_paper.pdf). ICCV, 2017.
 
 ## Flowchart
 
@@ -59,17 +58,14 @@ We use the NTU60 RGB+D dataset as an example for description. We need to first d
 
 ```bash
 # For CNN-based model with view adaptation module
-python  va-cnn.py --model VA --aug 1 --train 1
+python  va-cnn.py --model VA --aug 1 --train 1 
+
+# For steer-CNN-based model with view adaptation module
+python  va-cnn.py --model VA --aug 1 --train 1 --steer
 
 # For CNN-based model without view adaptation module
 python  va-cnn.py --model baseline --aug 1 --train 1
 
-# For RNN-based model with view adaptation module
-python va-rnn.py --model VA --aug 1 --train 1
-
-# For RNN-based model without view adaptation module
-python va-rnn.py --model baseline --aug 1 --train 1
-```
 
 
 
@@ -79,18 +75,16 @@ python va-rnn.py --model baseline --aug 1 --train 1
 # For CNN-based model with view adaptation module
 python  va-cnn.py --model VA --aug 1 --train 0
 
+# For steer-CNN-based model with view adaptation module
+python  va-cnn.py --model VA --aug 1 --train 0 --steer
+
 # For CNN-based model without view adaptation module
 python  va-cnn.py --model baseline --aug 1 --train 0
 
-# For RNN-based model with view adaptation module
-python va-rnn.py --model VA --aug 1 --train 0
 
-# For RNN-based model without view adaptation module
-python va-rnn.py --model baseline --aug 1 --train 0
-```
 
 ## Reference
-If you find our papers and repo useful, please cite our papers. Thanks!
+If you find othe papers and repo useful, you can cite the paper: 
 
 ```
 @article{zhang2019view,
@@ -100,13 +94,6 @@ If you find our papers and repo useful, please cite our papers. Thanks!
   year={2019},
 }
 
-@inproceedings{zhang2017view,
-  title={View adaptive recurrent neural networks for high performance human action recognition from skeleton data},
-  author={Zhang, Pengfei and Lan, Cuiling and Xing, Junliang and Zeng, Wenjun and Xue, Jianru and Zheng, Nanning},
-  booktitle={Proceedings of the IEEE International Conference on Computer Vision},
-  pages={2117--2126},
-  year={2017}
-}
 
 ```
 Microsoft Open Source Code of Conduct: https://opensource.microsoft.com/codeofconduct
