@@ -8,6 +8,8 @@ import h5py
 import os.path as osp
 import sys
 import scipy.misc
+
+
 if sys.version_info[0] == 2:
     import cPickle as pickle
 else:
@@ -67,6 +69,7 @@ class NTUDataLoaders(object):
                           collate_fn=self.collate_fn, pin_memory=True)
     def torgb(self, ske_joints):
         rgb = []
+        skel_list = []
         maxmin = list()
         self.idx = 0
         for ske_joint in ske_joints:
@@ -85,8 +88,16 @@ class NTUDataLoaders(object):
             min_val = self.min
 
             #### original rescale to 0-255
-            ske_joint =  255 * (ske_joint - min_val) / (max_val - min_val)
+            ske_joint = 255 * (ske_joint - min_val) / (max_val - min_val)
             rgb_ske = np.reshape(ske_joint, (ske_joint.shape[0], ske_joint.shape[1] //3, 3))
+            # skels = rgb_ske.copy()
+            # skels = skels/255.0
+            skels = rgb_ske.copy().astype(np.float32)
+            skels = center(skels)
+            skels = np.transpose(skels, [1, 0, 2])
+            skels = np.transpose(skels, [2, 1, 0])
+            skel_list.append(skels)
+
             rgb_ske = scipy.misc.imresize(rgb_ske, (224, 224)).astype(np.float32)
             rgb_ske = center(rgb_ske)
             rgb_ske = np.transpose(rgb_ske, [1, 0, 2])
@@ -95,7 +106,7 @@ class NTUDataLoaders(object):
             maxmin.append([max_val, min_val])
             self.idx = self.idx +1
 
-        return rgb, maxmin
+        return rgb, maxmin , skels
 
     def compute_max_min(self, ske_joints):
         max_vals, min_vals = list(), list()
@@ -122,19 +133,19 @@ class NTUDataLoaders(object):
     def collate_fn_aug(self,batch):
         x, y = zip(*batch)
         x = torch.stack([torch.from_numpy(x[i]) for i in range(len(x))], 0)
-        x = _transform(x)
-        x, maxmin = self.torgb(x.numpy())
+        x = _transform(x)#Augmentaiton
+        x, maxmin, skels = self.torgb(x.numpy())
 
         x = torch.stack([torch.from_numpy(x[i]) for i in range(len(x))], 0)
         y = torch.LongTensor(y)
-        return [x,torch.FloatTensor(maxmin), y]
+        return [x,torch.FloatTensor(maxmin), y , skels]
 
     def collate_fn(self,batch):
         x, y = zip(*batch)
-        x, maxmin = self.torgb(x)
+        x, maxmin, skels = self.torgb(x)
         x = torch.stack([torch.from_numpy(x[i]) for i in range(len(x))], 0)
         y = torch.LongTensor(y)
-        return [x,torch.FloatTensor(maxmin), y]
+        return [x,torch.FloatTensor(maxmin), y, skels]
 
     def get_train_size(self):
         return len(self.train_Y)

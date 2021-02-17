@@ -15,13 +15,14 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import torchvision.models as models
 from transform_cnn import VA
 from data_cnn import NTUDataLoaders, AverageMeter,  make_dir, get_cases, get_num_classes
+from transform_cnn import _transform_skel
 
 args = argparse.ArgumentParser(description='View adaptive')
 args.add_argument('--model', type=str, default='VA',
                   help='the neural network to use')
 args.add_argument('--dataset', type=str, default='NTU',
                   help='select dataset to evlulate')
-args.add_argument('--max_epoches', type=int, default=100,
+args.add_argument('--max_epoches', type=int, default=25,     #default=100
                   help='start number of epochs to run')
 args.add_argument('--lr', type=float, default=0.0001,
                   help='initial learning rate')
@@ -31,7 +32,7 @@ args.add_argument('--optimizer', type=str, default='Adam',
                   help='the optimizer type')
 args.add_argument('--print_freq', '-p', type=int, default=20,
                   help='print frequency (default: 20)')
-args.add_argument('-b', '--batch_size', type=int, default=32,
+args.add_argument('-b', '--batch_size', type=int, default=32, #32,
                   help='mini-batch size (default: 256)')
 args.add_argument('--num_classes', type=int, default=60,
                   help='the number of classes')
@@ -39,6 +40,8 @@ args.add_argument('--case', type=int, default=0,
                   help='select which case')
 args.add_argument('--aug', type=int, default=1,
                   help='data augmentation')
+args.add_argument('--steer', type=int, default=1,
+                  help='steer CNN enable')
 args.add_argument('--workers', type=int, default=8,
                   help='number of data loading workers')
 args.add_argument('--monitor', type=str, default='val_acc',
@@ -51,7 +54,7 @@ def main(results):
 
     num_classes = get_num_classes(args.dataset)
     if args.model[0:2] == 'VA':
-        model = VA(num_classes)
+        model = VA(num_classes,args.steer)
     else:
         model = models.resnet50(pretrained=True)
         num_ftrs = model.fc.in_features
@@ -156,6 +159,7 @@ def main(results):
 
     # Testing
     test_loader = ntu_loaders.get_test_loader(args.batch_size, args.workers)
+    # test_loader = ntu_loaders.get_test_loader(1, args.workers)
     test(test_loader, model, checkpoint, results, pred_dir, label_dir)
 
 
@@ -166,14 +170,15 @@ def train(train_loader, model, criterion, optimizer, epoch):
 
     model.train()
 
-    for i, (inputs, maxmin, target) in enumerate(train_loader):
+    for i, (inputs, maxmin, target, skels) in enumerate(train_loader):
 
         if args.model[0:2] == 'VA':
             output, imag, trans = model(inputs.cuda(), maxmin.cuda())
         else:
             output = model(inputs.cuda())
 
-        target = target.cuda(async=True)
+        # target = target.cuda(async=True)
+        target = target.cuda()
         loss = criterion(output, target)
 
         # measure accuracy and record loss
@@ -202,7 +207,7 @@ def validate(val_loader, model, criterion):
     # switch to evaluation mode
     model.eval()
 
-    for i, (inputs, maxmin, target) in enumerate(val_loader):
+    for i, (inputs, maxmin, target,skels) in enumerate(val_loader):
 
         if args.model[0:2] == 'VA':
             with torch.no_grad():
@@ -210,7 +215,8 @@ def validate(val_loader, model, criterion):
         else:
             with torch.no_grad():
                 output = model(inputs.cuda())
-        target = target.cuda(async=True)
+        # target = target.cuda(async=True)
+        target = target.cuda()
         with torch.no_grad():
             loss = criterion(output, target)
 
@@ -231,11 +237,13 @@ def test(test_loader, model, checkpoint, results,path, label_path):
 
     preds, label = list(), list()
     t_start = time.time()
-    for i, (inputs, maxmin, target) in enumerate(test_loader):
+    for i, (inputs, maxmin, target, skels) in enumerate(test_loader):
         if args.model[0:2] =='VA':
 
             with torch.no_grad():
                 output, img, trans = model(inputs.cuda(), maxmin.cuda())
+
+
         else:
             with torch.no_grad():
                 output = model(inputs.cuda())
@@ -258,6 +266,8 @@ def test(test_loader, model, checkpoint, results,path, label_path):
     results.append(round(float(total/len(label)*100),2))
     np.savetxt(path, preds, fmt = '%f')
     np.savetxt(label_path, label, fmt = '%f')
+
+
 
 
 def accuracy(output, target):
@@ -287,6 +297,7 @@ if __name__ == '__main__':
     cases = get_cases(args.dataset)
 
     for case in range(cases):
+    # for case in [1]:
         args.case = case
         main(results)
     np.savetxt(rootdir + '/resuult.txt', results, fmt = '%f')

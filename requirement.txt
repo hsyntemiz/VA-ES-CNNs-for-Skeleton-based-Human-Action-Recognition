@@ -1,0 +1,2 @@
+e2cnn
+pytorch=1.7.1
