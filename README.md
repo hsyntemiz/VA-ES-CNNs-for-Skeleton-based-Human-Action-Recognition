@@ -13,7 +13,7 @@ This repository holds the codes and methods for the following paper:
 
 ![image](https://github.com/microsoft/View-Adaptive-Neural-Networks-for-Skeleton-based-Human-Action-Recognition/blob/master/image/Flowchart.png)
 
-![image](https://github.com/hsyntemiz/VA-ES-CNNs-for-Skeleton-based-Human-Action-Recognition/blob/master/image/544proj-va-cnn.pdf)
+![image](https://github.com/hsyntemiz/VA-ES-CNNs-for-Skeleton-based-Human-Action-Recognition/blob/master/image/544proj-va-cnn.png)
 
 
 
