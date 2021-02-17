@@ -1,14 +1,16 @@
 
 # View-Adaptive-E(2)-Equivariant-Steerable-CNNs-for-Skeleton-based-Human-Action-Recognition
 
-**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)**
 
 ## Introduction
 
 Regardless of input type, humans in an action can be seen from different viewpoints. Therefore, action
 recognition methods should be robust to viewpoint variation.To relieve the adverse effects of view variations, Zhang et al introduce a novel view adaptation scheme. In this repository, we investigate the performance of Equivariant-Steerable-CNNs in the view adaptation module.
 
-This repository holds the codes and methods for the following paper:
+**[Our Report](https://github.com/hsyntemiz/VA-ES-CNNs-for-Skeleton-based-Human-Action-Recognition/blob/master/image/cmpe544_Project.pdf)**
+
+
+This repository forked from the codes of the following paper:
 
 [**View Adaptive Neural Networks for High Performance Skeleton-based Human Action Recognition**](https://arxiv.org/pdf/1804.07453.pdf). TPAMI, 2019.
 
@@ -18,7 +20,7 @@ This repository holds the codes and methods for the following paper:
 ![image](https://github.com/hsyntemiz/VA-ES-CNNs-for-Skeleton-based-Human-Action-Recognition/blob/master/image/544proj-va-cnn.png)
 
 
-Figure 1: Flowchat of the end-to-end view adaptive neural network. It consists of a main classification network and a view adaptation subnetwork. The view adaptation subnetwork automatically determines the virtual observation viewpoints and transforms the skeleton input to representations under the new viewpoints for classification by the main classification network. The entire network is end-toend trained to optimize the classification performance.
+Figure 1: Pipeline of the end-to-end view adaptive neural network. 
 
 
 
