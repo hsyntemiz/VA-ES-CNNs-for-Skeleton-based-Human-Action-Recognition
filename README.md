@@ -1,5 +1,5 @@
 
-# View Adaptive Neural Networks (VA) for Skeleton-based Human Action Recognition
+# View-Adaptive-E(2)-Equivariant-Steerable-CNNs-for-Skeleton-based-Human-Action-Recognition
 
 ## Introduction
 For skeleton-based human action recognition, one of the key challenges is the large view variations when capturing data. In order to alleviate the effects of view variations, we introduce a novel view adaptation scheme, which automatically determines the virtual observation viewpoints in a learning based data driven manner.  
