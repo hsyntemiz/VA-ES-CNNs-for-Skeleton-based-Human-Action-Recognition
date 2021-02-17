@@ -4,7 +4,9 @@
 **[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)**
 
 ## Introduction
-For skeleton-based human action recognition, one of the key challenges is the large view variations when capturing data. In order to alleviate the effects of view variations, we introduce a novel view adaptation scheme, which automatically determines the virtual observation viewpoints in a learning based data driven manner.  
+
+Regardless of input type, humans in an action can be seen from different viewpoints. Therefore, action
+recognition methods should be robust to viewpoint variation.To relieve the adverse effects of view variations, Zhang et al introduce a novel view adaptation scheme. In this repository, we investigate the performance of Equivariant-Steerable-CNNs in the view adaptation module.
 
 This repository holds the codes and methods for the following paper:
 
