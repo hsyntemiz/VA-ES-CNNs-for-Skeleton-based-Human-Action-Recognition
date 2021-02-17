@@ -16,11 +16,6 @@ This repository holds the codes and methods for the following paper:
 
 Figure 1: Flowchat of the end-to-end view adaptive neural network. It consists of a main classification network and a view adaptation subnetwork. The view adaptation subnetwork automatically determines the virtual observation viewpoints and transforms the skeleton input to representations under the new viewpoints for classification by the main classification network. The entire network is end-toend trained to optimize the classification performance.
 
-## Framework
-
-![image](https://github.com/microsoft/View-Adaptive-Neural-Networks-for-Skeleton-based-Human-Action-Recognition/blob/master/image/Framework.png)
-
-Figure 2: Architecture of the proposed view adaptive neural networks: a view adaptive RNN with LSTM (VA-RNN), and a view adaptive CNN (VA-CNN). The classification scores from the two networks can be fused to provide the fused prediction, denoted as the VA-fusion scheme. Note that based on application requirements, we can use VA-RNN or VA-CNN only or combine them together. 
 
 
 ## Prerequisites
