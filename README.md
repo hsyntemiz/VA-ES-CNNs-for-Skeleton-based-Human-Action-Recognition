@@ -30,11 +30,11 @@ Figure 3: Frames of (a) the similar posture captured from different viewpoints f
 
 ## Prerequisites
 The code is built with following libraries:
-- Python 2.7
+- Python 3.7
 - [Anaconda](https://www.anaconda.com/)
-- [PyTorch](https://pytorch.org/) 1.0
-- [Keras](https://keras.io/) 2.1.2 
-- [Theano](http://deeplearning.net/software/theano/) 1.0
+- [PyTorch](https://pytorch.org/) 1.7.1
+- [e2cnn](https://github.com/QUVA-Lab/e2cnn) 0.1.5 
+
 
 
 ## Data Preparation
